@@ -6,6 +6,7 @@ import com.qulix.lab.openapifileserver.service.impl.FileServerImpl;
 import org.springframework.http.ResponseEntity;
 //import com.qulix.lab.SwaggerCodgen.api.BookApi;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 //import com.qulix.lab.SwaggerCodgen.api.BookApi;
 
 import java.io.FileNotFoundException;
@@ -42,7 +43,13 @@ public class FileServerController implements FileApi {
 //        logger.info("request for create the folder");
         return ResponseEntity.ok(String.valueOf(fileServerService.deleteFolder(pathToFiles, fileName)));
     }
-//    @Override
+
+    @Override
+    public ResponseEntity<Void> uploadFile(MultipartFile fileName) {
+        return FileApi.super.uploadFile(fileName);
+    }
+
+    //    @Override
 //    public ResponseEntity<List<Book>> getBooks() {
 //        List<Book> bookList = new ArrayList<>();
 //        bookList.add(new Book()
