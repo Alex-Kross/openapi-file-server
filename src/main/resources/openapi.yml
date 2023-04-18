@@ -1,0 +1,196 @@
+openapi: 3.0.3
+info:
+  title: Book Shop
+  description: Book CRUD API.
+  version: 1.0.0
+tags:
+  - name: file
+servers:
+  - url: /v2
+paths:
+  /files:
+    get:
+      parameters:
+        - in: query
+          name: pathToFiles
+          schema:
+            type: string
+          description: The path to the folder
+      summary: get list of files
+      operationId: getFiles
+      tags:
+        - file
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+#                items:
+#                  $ref: '#/components/schemas/Book'
+  /create-folder:
+    get:
+      parameters:
+        - in: query
+          name: pathToFiles
+          schema:
+            type: string
+          description: The path to the folder
+        - in: query
+          name: fileName
+          schema:
+            type: string
+          description: Name for file
+      summary: createFolder
+      operationId: createFolder
+      tags:
+        - file
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /delete-folder:
+    get:
+      parameters:
+        - in: query
+          name: pathToFiles
+          schema:
+            type: string
+          description: The path to the folder
+        - in: query
+          name: fileName
+          schema:
+            type: string
+          description: Name for file
+      summary: deleteFolder
+      operationId: deleteFolder
+      tags:
+        - file
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+  /upload:
+    post:
+      summary: uploadFile
+      operationId: uploadFile
+      tags:
+      - file
+      parameters:
+        - in: query
+          name: pathToFiles
+          schema:
+            type: string
+          description: The path to the folder
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+#                fileName:
+#                  type: string
+#                  format: binary
+      responses:
+        200:
+          description: successful operation
+          responseBody:
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  properties:
+                    filename:
+                      type: array
+                      items:
+                        type: string
+                        format: binary
+          content:
+            application/json:
+              schema:
+                type: string
+#            text/plain:
+#              schema:
+#                type: string
+      #      summary: uploadFile
+      #      operationId: uploadFile
+      #      tags:
+      #        - file
+      #      requestBody:
+      #        content:
+      #          multipart/form-data:
+      #            schema:
+      #              type: object
+      #              properties:
+      #                # The property name 'file' will be used for all files.
+      #                file:
+      #                  type: array
+      #                  items:
+      #                    type: string
+      #                    format: binary
+      #            multipart/form-data:
+      #              schema:
+      #                type: object
+      #                properties:
+      #                  fileName:
+      #                    type: array
+      #                    items:
+      #                      type: string
+      #                      format: binary
+#          content:
+#            image/png:
+#              schema:
+#                type: string
+#                format: binary
+#                properties:
+#                  # The property name 'file' will be used for all files.
+#                  file:
+#                    type: array
+#                    items:
+#                      type: string
+#                      format: binary
+#    post:
+#      summary: Add a Book
+#      operationId: addBook
+#      requestBody:
+#        description: Book to be added in shop
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/Book'
+#        required: true
+#      responses:
+#        200:
+#          description: Book Added
+#          content:
+#            application/json:
+#              schema:
+#                type: string
+#      x-codegen-request-body-name: book
+#components:
+#  schemas:
+#    Book:
+#      type: object
+#      properties:
+#        id:
+#          type: integer
+#          format: int64
+#        title:
+#          type: string
+#          example: Oathbringer
+#        author:
+#          type: string
+#          example: Brandon Sanderson
