@@ -90,38 +90,49 @@ paths:
           schema:
             type: string
           description: The path to the folder
+#      requestBody:
+#        content:
+#          image/png:
+#            schema:
+#              type: string
+#              format: binary
       requestBody:
         content:
           multipart/form-data:
             schema:
               type: object
               properties:
-                filename:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
-#                fileName:
-#                  type: string
-#                  format: binary
+#                filename:
+#                  type: array
+#                  items:
+#                    type: string
+#                    format: binary
+                fileName:
+                  type: string
+                  format: binary
       responses:
         200:
           description: successful operation
-          responseBody:
-            content:
-              multipart/form-data:
-                schema:
-                  type: object
-                  properties:
-                    filename:
-                      type: array
-                      items:
-                        type: string
-                        format: binary
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
+#          responseBody:
+#            content:
+#              multipart/form-data:
+#                schema:
+#                  type: object
+#                  properties:
+#                    filename:
+#                      type: array
+#                      items:
+#                        type: string
+#                        format: binary
+#          content:
+#            image/png:
+#              schema:
+#                type: string
+#                format: binary
 #            text/plain:
 #              schema:
 #                type: string

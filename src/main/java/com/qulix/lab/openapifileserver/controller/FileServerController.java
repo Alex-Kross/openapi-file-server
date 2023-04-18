@@ -4,6 +4,7 @@ package com.qulix.lab.openapifileserver.controller;
 import com.qulix.lab.SwaggerCodgen.api.FileApi;
 import com.qulix.lab.openapifileserver.service.impl.FileServerImpl;
 import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 //import com.qulix.lab.SwaggerCodgen.api.BookApi;
 import org.springframework.web.bind.annotation.RestController;
