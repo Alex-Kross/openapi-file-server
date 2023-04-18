@@ -84,44 +84,77 @@ paths:
       operationId: uploadFile
       tags:
       - file
+      parameters:
+        - in: query
+          name: pathToFiles
+          schema:
+            type: string
+          description: The path to the folder
       requestBody:
         content:
           multipart/form-data:
             schema:
-              type: string
+              type: object
               properties:
-                fileName:
-                  type: string
-                  format: binary
-#      parameters:
-#        - in: query
-#          name: pathToFiles
-#          schema:
-#            type: string
-#          description: The path to the folder
-#      summary: uploadFile
-#      operationId: uploadFile
-#      tags:
-#        - file
-#      requestBody:
-#        content:
-#          multipart/form-data:
-#            schema:
-#              type: object
-#              properties:
-#                # The property name 'file' will be used for all files.
-#                file:
-#                  type: array
-#                  items:
-#                    type: string
-#                    format: binary
+                filename:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+#                fileName:
+#                  type: string
+#                  format: binary
       responses:
         200:
           description: successful operation
-#          content:
+          responseBody:
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  properties:
+                    filename:
+                      type: array
+                      items:
+                        type: string
+                        format: binary
+          content:
+            application/json:
+              schema:
+                type: string
 #            text/plain:
 #              schema:
-##                type: string
+#                type: string
+      #      summary: uploadFile
+      #      operationId: uploadFile
+      #      tags:
+      #        - file
+      #      requestBody:
+      #        content:
+      #          multipart/form-data:
+      #            schema:
+      #              type: object
+      #              properties:
+      #                # The property name 'file' will be used for all files.
+      #                file:
+      #                  type: array
+      #                  items:
+      #                    type: string
+      #                    format: binary
+      #            multipart/form-data:
+      #              schema:
+      #                type: object
+      #                properties:
+      #                  fileName:
+      #                    type: array
+      #                    items:
+      #                      type: string
+      #                      format: binary
+#          content:
+#            image/png:
+#              schema:
+#                type: string
+#                format: binary
 #                properties:
 #                  # The property name 'file' will be used for all files.
 #                  file:

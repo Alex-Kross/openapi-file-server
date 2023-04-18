@@ -3,13 +3,16 @@ package com.qulix.lab.openapifileserver.controller;
 //import com.qulix.lab.SwaggerCodgen.model.Book;
 import com.qulix.lab.SwaggerCodgen.api.FileApi;
 import com.qulix.lab.openapifileserver.service.impl.FileServerImpl;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.ResponseEntity;
 //import com.qulix.lab.SwaggerCodgen.api.BookApi;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 //import com.qulix.lab.SwaggerCodgen.api.BookApi;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @RestController
 public class FileServerController implements FileApi {
@@ -45,9 +48,27 @@ public class FileServerController implements FileApi {
     }
 
     @Override
-    public ResponseEntity<Void> uploadFile(MultipartFile fileName) {
-        return FileApi.super.uploadFile(fileName);
+    public ResponseEntity<String> uploadFile(String pathToFiles, MultipartFile fileName) {
+        String result = "";
+        try {
+            File testFile = new File("C:\\Super" + pathToFiles + "\\" + fileName.getName());
+
+            FileUtils.writeByteArrayToFile(testFile, fileName.getBytes());
+            result = fileName.getBytes().toString();
+//        fileName.getInputStream();
+        } catch (IOException e) {
+
+        }
+        return ResponseEntity.ok(result);
     }
+//    @Override
+//    public ResponseEntity<UploadFileRequest> uploadFile(MultipartFile fileName) {
+//        return FileApi.super.uploadFile(fileName);
+//    }
+//    @Override
+//    public ResponseEntity<Void> uploadFile(MultipartFile fileName) {
+//        return FileApi.super.uploadFile(fileName);
+//    }
 
     //    @Override
 //    public ResponseEntity<List<Book>> getBooks() {
