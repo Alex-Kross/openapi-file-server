@@ -4,10 +4,13 @@ package com.qulix.lab.openapifileserver.service.impl;
 import com.qulix.lab.openapifileserver.entity.FileAttribute;
 import com.qulix.lab.openapifileserver.entity.FileEntity;
 import com.qulix.lab.openapifileserver.service.FileServer;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -84,73 +87,25 @@ public class FileServerImpl implements FileServer {
         return file.delete();
     }
 
-//    public boolean createFolder(String path, String name){
-//        File file = new File(rootPath + path + "\\" + name);
-//        if (file.exists()) {
-//            throw new RuntimeException("Folder exist");
-//        }
-//        return file.mkdir();
-//    }
-//    public boolean deleteFolder(String path, String name){
-//        File file = new File(rootPath + path + "\\" + name);
-//        if (!file.exists()) {
-//            throw new RuntimeException("Folder doesn't exist");
-//        }
-//        return file.delete();
-//    }
-//    public boolean uploadFileWithOnlyPath(String path) throws IOException {
-//        File file = new File(path);
-//        if (!file.exists()) {
-//            throw new RuntimeException("File doesn't exist");
-//        }
-//        File newFile = new File(rootPath + "\\" + file.getName());
-//
-//        copyDataFileInAnotherFile(file, newFile);
-//        return true;
-//
-//    }
-//
-//    public void copyDataFileInAnotherFile(File file, File anotherFile) throws IOException {
-//        InputStream inputStream = new FileInputStream(file);
-//        OutputStream outputStream = new FileOutputStream(anotherFile);
-//        outputStream.write(inputStream.readAllBytes());
-//    }
-//
-//    public String uploadFile(MultipartFormDataInput input, @QueryParam("path") String path){
-//        String fileName = "";
+
+    public String uploadFile(String path, MultipartFile file) throws IOException{
+        String fileName = file.getOriginalFilename();
 //        String fileList = "";
-//        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-//
-//        Collection<List<InputPart>> values = uploadForm.values();
-//
-////        List<InputPart> inputParts = uploadForm.get("uploadedFile");
-//        for (List<InputPart> value : values) {
-//            for (InputPart inputPart : value) {
-//                try {
-//
-//                    MultivaluedMap<String, String> header = inputPart.getHeaders();
-//                    fileName = getFileName(header);
-//                    fileList += fileName + "\n";
-//
-//                    //convert the uploaded file to inputstream
-//                    InputStream inputStream = inputPart.getBody(InputStream.class,null);
-//
-//                    byte [] bytes = IOUtils.toByteArray(inputStream);
-//
-//                    //constructs upload file path
-//                    fileName = rootPath + path + "\\" + fileName;
-//
-//                    writeFile(bytes,fileName);
-//
-//                    System.out.println("Done");
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return fileList;
-//    }
+        File newFile = new File(rootPath + "\\" + path + "\\" + fileName);
+
+//        File currentFile = file.getResource().getFile();
+        FileUtils.writeByteArrayToFile(newFile, file.getBytes());
+//        copyDataFileInAnotherFile(currentFile, newFile);
+//        byte [] bytes = IOUtils.toByteArray(file.getInputStream());
+//        fileList = String.valueOf(bytes);
+
+        return fileName;
+    }
+    public void copyDataFileInAnotherFile(File file, File anotherFile) throws IOException {
+        InputStream inputStream = new FileInputStream(file);
+        OutputStream outputStream = new FileOutputStream(anotherFile);
+        outputStream.write(inputStream.readAllBytes());
+    }
 //
 //    /**
 //     * header sample

@@ -81,7 +81,7 @@ paths:
   /upload:
     post:
       summary: uploadFile
-      operationId: uploadFile
+      operationId: upload
       tags:
       - file
       parameters:
@@ -90,7 +90,8 @@ paths:
           schema:
             type: string
           description: The path to the folder
-#      requestBody:
+          required: true
+      #      requestBody:
 #        content:
 #          image/png:
 #            schema:
@@ -102,14 +103,16 @@ paths:
             schema:
               type: object
               properties:
-#                filename:
+#                file:
 #                  type: array
 #                  items:
 #                    type: string
 #                    format: binary
-                fileName:
+                file:
                   type: string
                   format: binary
+#              required:
+#                - file
       responses:
         200:
           description: successful operation
@@ -117,6 +120,13 @@ paths:
             text/plain:
               schema:
                 type: string
+#            application/json:
+#              schema:
+#                type: array
+##                properties:
+#                items:
+#                  type: string
+#                  format: binary
 #          responseBody:
 #            content:
 #              multipart/form-data:

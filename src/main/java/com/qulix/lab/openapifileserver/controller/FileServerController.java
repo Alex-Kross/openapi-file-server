@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class FileServerController implements FileApi {
@@ -49,18 +50,24 @@ public class FileServerController implements FileApi {
     }
 
     @Override
-    public ResponseEntity<String> uploadFile(String pathToFiles, MultipartFile fileName) {
+    public ResponseEntity<String> upload(String pathToFiles, MultipartFile file) {
         String result = "";
+        Resource resource = file.getResource();
+        String name = file.getName();
+        String originalFilename = file.getOriginalFilename();
+        String contentType = file.getContentType();
         try {
-            File testFile = new File("C:\\Super" + pathToFiles + "\\" + fileName.getName());
-
-            FileUtils.writeByteArrayToFile(testFile, fileName.getBytes());
-            result = fileName.getBytes().toString();
-//        fileName.getInputStream();
+//            File file2 = resource.getFile();
+            result = fileServerService.uploadFile(pathToFiles, file);
+//            File testFile = new File("C:\\Super" + pathToFiles + "\\" + fileName.getName());
+//
+//            FileUtils.writeByteArrayToFile(testFile, fileName.getBytes());
+//            result = fileName.getBytes().toString();
+////        fileName.getInputStream();
         } catch (IOException e) {
-
+//
         }
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok("uploadFile is called, Uploaded file name : " + result);
     }
 //    @Override
 //    public ResponseEntity<UploadFileRequest> uploadFile(MultipartFile fileName) {
