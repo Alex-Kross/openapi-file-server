@@ -106,47 +106,7 @@ public class FileServerImpl implements FileServer {
         OutputStream outputStream = new FileOutputStream(anotherFile);
         outputStream.write(inputStream.readAllBytes());
     }
-//
-//    /**
-//     * header sample
-//     * {
-//     * 	Content-Type=[image/png],
-//     * 	Content-Disposition=[form-data; name="file"; filename="filename.extension"]
-//     * }
-//     **/
-//    //get uploaded filename, is there a easy way in RESTEasy?
-//    private String getFileName(MultivaluedMap<String, String> header) {
-//
-//        String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
-//
-//        for (String filename : contentDisposition) {
-//            if ((filename.trim().startsWith("filename"))) {
-//
-//                String[] name = filename.split("=");
-//
-//                String finalFileName = name[1].trim().replaceAll("\"", "");
-//                return finalFileName;
-//            }
-//        }
-//        return "unknown";
-//    }
-//
-//    //save to somewhere
-//    private void writeFile(byte[] content, String filename) throws IOException {
-//
-//        File file = new File(filename);
-//
-//        if (!file.exists()) {
-//            file.createNewFile();
-//        }
-//
-//        FileOutputStream fop = new FileOutputStream(file);
-//
-//        fop.write(content);
-//        fop.flush();
-//        fop.close();
-//
-//    }
+
 //    public boolean deleteFile(String path) {
 //        File file = new File(path);
 //        if (!file.exists()) {
@@ -155,8 +115,8 @@ public class FileServerImpl implements FileServer {
 //        return file.delete();
 //    }
 //
-//    public File downloadFile(String path) {
-//        File file = new File(rootPath + "\\" + path);
-//        return file;
-//    }
+    public File downloadFile(String path) {
+        File file = new File(rootPath + "\\" + path);
+        return file;
+    }
 }

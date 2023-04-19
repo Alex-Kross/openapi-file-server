@@ -4,16 +4,19 @@ package com.qulix.lab.openapifileserver.controller;
 import com.qulix.lab.SwaggerCodgen.api.FileApi;
 import com.qulix.lab.openapifileserver.service.impl.FileServerImpl;
 import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 //import com.qulix.lab.SwaggerCodgen.api.BookApi;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 //import com.qulix.lab.SwaggerCodgen.api.BookApi;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -69,7 +72,26 @@ public class FileServerController implements FileApi {
         }
         return ResponseEntity.ok("uploadFile is called, Uploaded file name : " + result);
     }
-//    @Override
+
+    @Override
+    public ResponseEntity<Resource> download(String pathToFiles) {
+        File file = fileServerService.downloadFile(pathToFiles);
+
+        try {
+//            FileInputStream fileInputStream = new FileInputStream(file);
+//            Path path = Paths.get("C:\\Super\\" + pathToFiles + "\\" + file.toPath());
+            ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(file.toPath()));
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+                    .body(resource);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //    @Override
 //    public ResponseEntity<UploadFileRequest> uploadFile(MultipartFile fileName) {
 //        return FileApi.super.uploadFile(fileName);
 //    }
