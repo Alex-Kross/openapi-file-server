@@ -91,6 +91,11 @@ public class FileServerController implements FileApi {
         }
     }
 
+    @Override
+    public ResponseEntity<String> delete(String pathToFiles) {
+        return ResponseEntity.ok(String.valueOf(fileServerService.deleteFile(pathToFiles)));
+    }
+
     //    @Override
 //    public ResponseEntity<UploadFileRequest> uploadFile(MultipartFile fileName) {
 //        return FileApi.super.uploadFile(fileName);

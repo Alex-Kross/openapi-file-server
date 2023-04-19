@@ -107,14 +107,14 @@ public class FileServerImpl implements FileServer {
         outputStream.write(inputStream.readAllBytes());
     }
 
-//    public boolean deleteFile(String path) {
-//        File file = new File(path);
-//        if (!file.exists()) {
-//            throw new RuntimeException("File doesn't exist");
-//        }
-//        return file.delete();
-//    }
-//
+    public boolean deleteFile(String path) {
+        File file = new File(rootPath + "\\" + path);
+        if (!file.exists()) {
+            throw new RuntimeException("File doesn't exist");
+        }
+        return file.delete();
+    }
+
     public File downloadFile(String path) {
         File file = new File(rootPath + "\\" + path);
         return file;
